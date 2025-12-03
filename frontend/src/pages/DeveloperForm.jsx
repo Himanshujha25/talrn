@@ -23,7 +23,7 @@ export default function DeveloperForm({ onSuccess }) {
     };
 
     try {
-      const res = await fetch("http://localhost:4000/developers", {
+      const res = await fetch("https://talrn-gl6q.onrender.com/developers", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

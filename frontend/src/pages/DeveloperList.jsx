@@ -6,7 +6,7 @@ export default function DeveloperList({ refresh }) {
   const [techFilter, setTechFilter] = useState("");
 
   const fetchDevelopers = async () => {
-    const res = await fetch("http://localhost:4000/developers");
+    const res = await fetch("https://talrn-gl6q.onrender.com/developers");
     const data = await res.json();
     setDevelopers(data);
   };
