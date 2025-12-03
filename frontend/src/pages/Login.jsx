@@ -24,40 +24,50 @@ export default function Login({ login }) {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
-      <form
-        onSubmit={handleLogin}
-        className="p-6 bg-white dark:bg-gray-800 shadow rounded w-80"
-      >
-        <h2 className="text-xl mb-4 font-bold dark:text-white">Login</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 px-4">
 
-        <input
-          className="w-full mb-3 p-2 border rounded dark:bg-gray-700 dark:text-white"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8">
 
-        <input
-          className="w-full mb-3 p-2 border rounded dark:bg-gray-700 dark:text-white"
-          placeholder="Password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <h1 className="text-2xl font-extrabold text-center mb-6 dark:text-white">
+          Developer Directory
+        </h1>
 
-        <button
-          className="w-full bg-blue-600 text-white p-2 rounded"
-          type="submit"
-        >
+        <h2 className="text-xl mb-4 font-semibold dark:text-gray-200">
           Login
-        </button>
+        </h2>
+
+        <form onSubmit={handleLogin} className="space-y-4">
+
+          <input
+            className="w-full p-3 border rounded bg-gray-50 dark:bg-gray-700 
+                       dark:text-white border-gray-300 dark:border-gray-600"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <input
+            type="password"
+            className="w-full p-3 border rounded bg-gray-50 dark:bg-gray-700 
+                       dark:text-white border-gray-300 dark:border-gray-600"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button
+            className="w-full p-3 rounded bg-blue-600 hover:bg-blue-700 text-white transition"
+          >
+            Login
+          </button>
+        </form>
 
         <p
-          className="mt-3 text-sm text-blue-600 cursor-pointer"
+          className="mt-4 text-sm text-blue-600 cursor-pointer text-center dark:text-blue-400"
           onClick={() => nav("/signup")}
         >
           Create an account
         </p>
-      </form>
+
+      </div>
     </div>
   );
 }

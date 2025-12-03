@@ -14,14 +14,14 @@ export default function AddDeveloper() {
     role: "",
     techStack: "",
     experience: "",
-    description: ""
+    description: "",
   });
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       await axios.post(API, form, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       toast.success("Developer added!");
@@ -32,49 +32,54 @@ export default function AddDeveloper() {
   };
 
   return (
-    <div className="p-6 dark:text-white">
-      <h2 className="text-2xl font-bold mb-4">Add Developer</h2>
+    <div className="p-6 min-h-screen bg-gray-50 dark:bg-gray-900 flex justify-center items-start">
+      <div className="w-full max-w-xl bg-white dark:bg-gray-800 p-6 rounded-lg shadow border dark:border-gray-700">
 
-      <form className="space-y-3" onSubmit={submitHandler}>
-        <input
-          className="p-2 w-full border rounded dark:bg-gray-800"
-          placeholder="Name"
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
+        <h2 className="text-2xl font-bold mb-5 dark:text-white">Add Developer</h2>
 
-        <select
-          className="p-2 w-full border rounded dark:bg-gray-800"
-          onChange={(e) => setForm({ ...form, role: e.target.value })}
-        >
-          <option value="">Select Role</option>
-          <option>Frontend</option>
-          <option>Backend</option>
-          <option>Full-Stack</option>
-        </select>
+        <form className="space-y-4" onSubmit={submitHandler}>
+          <input
+            className="p-3 w-full border rounded bg-gray-50 dark:bg-gray-700 text-black dark:text-white border-gray-300 dark:border-gray-600"
+            placeholder="Name"
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
 
-        <input
-          className="p-2 w-full border rounded dark:bg-gray-800"
-          placeholder="Tech Stack (comma separated)"
-          onChange={(e) => setForm({ ...form, techStack: e.target.value })}
-        />
+          <select
+            className="p-3 w-full border rounded bg-gray-50 dark:bg-gray-700 text-black dark:text-white border-gray-300 dark:border-gray-600"
+            onChange={(e) => setForm({ ...form, role: e.target.value })}
+          >
+            <option value="">Select Role</option>
+            <option>Frontend</option>
+            <option>Backend</option>
+            <option>Full-Stack</option>
+          </select>
 
-        <input
-          className="p-2 w-full border rounded dark:bg-gray-800"
-          placeholder="Experience (years)"
-          type="number"
-          onChange={(e) => setForm({ ...form, experience: e.target.value })}
-        />
+          <input
+            className="p-3 w-full border rounded bg-gray-50 dark:bg-gray-700 text-black dark:text-white border-gray-300 dark:border-gray-600"
+            placeholder="Tech Stack (comma separated)"
+            onChange={(e) => setForm({ ...form, techStack: e.target.value })}
+          />
 
-        <textarea
-          className="p-2 w-full border rounded dark:bg-gray-800"
-          placeholder="Description"
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-        />
+          <input
+            className="p-3 w-full border rounded bg-gray-50 dark:bg-gray-700 text-black dark:text-white border-gray-300 dark:border-gray-600"
+            placeholder="Experience (years)"
+            type="number"
+            onChange={(e) => setForm({ ...form, experience: e.target.value })}
+          />
 
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">
-          Add
-        </button>
-      </form>
+          <textarea
+            className="p-3 w-full border rounded bg-gray-50 dark:bg-gray-700 text-black dark:text-white border-gray-300 dark:border-gray-600 h-28"
+            placeholder="Description"
+            onChange={(e) => setForm({ ...form, description: e.target.value })}
+          />
+
+          <button
+            className="w-full bg-blue-600 hover:bg-blue-700 transition text-white py-2 rounded"
+          >
+            Add Developer
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
