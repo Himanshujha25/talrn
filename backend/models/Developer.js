@@ -7,7 +7,8 @@ const developerSchema = new mongoose.Schema({
   experience: { type: Number, default: 0 },
   description: { type: String },
   joiningDate: { type: Date, default: Date.now },
-  photo: { type: String }
+  photo: { type: String, default: "" }
+
 });
 
 module.exports = mongoose.model("Developer", developerSchema);

@@ -39,6 +39,19 @@ export default function DeveloperProfile() {
 
       <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow border dark:border-gray-700">
 
+
+        {/* IMAGE SECTION */}
+        {dev.photo && (
+          <div className="w-full flex justify-center mb-6">
+            <img
+              src={`https://talrn-gl6q.onrender.com${dev.photo}`}
+              alt={dev.name}
+              className="w-40 h-40 rounded-full object-cover border shadow"
+            />
+          </div>
+        )}
+
+
         <h1 className="text-3xl font-bold dark:text-white">{dev.name}</h1>
         <p className="text-gray-600 dark:text-gray-300 mt-1">{dev.role}</p>
 

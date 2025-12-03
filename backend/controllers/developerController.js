@@ -1,9 +1,12 @@
 const Developer = require("../models/Developer");
 
-// Create developer
+// CREATE DEVELOPER (with photo upload)
 exports.createDeveloper = async (req, res) => {
   try {
-    const { name, role, techStack, experience, description, photo } = req.body;
+    const { name, role, techStack, experience, description } = req.body;
+
+    // Multer will store file under req.file
+    const photo = req.file ? `/uploads/${req.file.filename}` : "";
 
     const dev = await Developer.create({
       name,
@@ -16,19 +19,19 @@ exports.createDeveloper = async (req, res) => {
 
     res.status(201).json(dev);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Unable to add developer" });
   }
 };
 
-// Get all developers (search, filter, sort, pagination)
-// GET developers (search, filter, sort, pagination)
+
+// GET LIST (search + filter + sort + pagination)
 exports.getDevelopers = async (req, res) => {
   try {
     const { search = "", role = "", sort = "", page = 1, limit = 6 } = req.query;
 
     const query = {};
 
-    // Search
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: "i" } },
@@ -36,17 +39,12 @@ exports.getDevelopers = async (req, res) => {
       ];
     }
 
-    // Role filter
-    if (role) {
-      query.role = role;
-    }
+    if (role) query.role = role;
 
-    // Sorting
     const sortOption = {};
     if (sort === "asc") sortOption.experience = 1;
     if (sort === "desc") sortOption.experience = -1;
 
-    // Pagination
     const skip = (page - 1) * limit;
 
     const developers = await Developer.find(query)
@@ -54,8 +52,11 @@ exports.getDevelopers = async (req, res) => {
       .skip(skip)
       .limit(Number(limit));
 
-    res.json(developers);
+    // Count total pages
+    const totalItems = await Developer.countDocuments(query);
+    const totalPages = Math.ceil(totalItems / limit);
 
+    res.json({ developers, totalPages });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Server error" });
@@ -63,7 +64,7 @@ exports.getDevelopers = async (req, res) => {
 };
 
 
-// Get developer by ID
+// GET DEVELOPER BY ID
 exports.getDeveloperById = async (req, res) => {
   try {
     const dev = await Developer.findById(req.params.id);
@@ -74,21 +75,27 @@ exports.getDeveloperById = async (req, res) => {
   }
 };
 
-// Update developer
+
+// UPDATE DEVELOPER (with photo update)
 exports.updateDeveloper = async (req, res) => {
   try {
     const updates = req.body;
 
-   if (updates.techStack) {
-  if (Array.isArray(updates.techStack)) {
-    updates.techStack = updates.techStack.map(t => t.trim());
-  } else {
-    updates.techStack = updates.techStack.split(",").map(t => t.trim());
-  }
-}
+    // If frontend sent techStack as string
+    if (updates.techStack) {
+      updates.techStack = Array.isArray(updates.techStack)
+        ? updates.techStack.map((t) => t.trim())
+        : updates.techStack.split(",").map((t) => t.trim());
+    }
 
+    // Update photo if user uploaded new one
+    if (req.file) {
+      updates.photo = `/uploads/${req.file.filename}`;
+    }
 
-    const dev = await Developer.findByIdAndUpdate(req.params.id, updates, { new: true });
+    const dev = await Developer.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+    });
 
     res.json(dev);
   } catch (err) {
@@ -96,7 +103,8 @@ exports.updateDeveloper = async (req, res) => {
   }
 };
 
-// Delete developer
+
+// DELETE DEVELOPER
 exports.deleteDeveloper = async (req, res) => {
   try {
     await Developer.findByIdAndDelete(req.params.id);
