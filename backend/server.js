@@ -1,62 +1,32 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db");
 
 dotenv.config();
-
-const Developer = require("./models/Developer");
+connectDB();
 
 const app = express();
+
 app.use(express.json());
-app.use(cors());
 
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log("Mongo Error:", err));
-
+// FIX: Allow frontend (local & vercel)
+app.use(
+  cors({
+    origin: ["http://localhost:5173", process.env.FRONTEND_URL],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
-  res.send("Developer Directory Backend with MongoDB");
+  res.send("Backend Running");
 });
 
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/developers", require("./routes/developerRoutes"));
 
-app.get("/developers", async (req, res) => {
-  try {
-    const devs = await Developer.find().sort({ createdAt: -1 });
-    res.json(devs);
-  } catch (err) {
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-
-app.post("/developers", async (req, res) => {
-  try {
-    const { name, role, techStack, experience } = req.body;
-
-    if (!name || !role || !techStack) {
-      return res.status(400).json({ error: "name, role, techStack required" });
-    }
-
-    const newDev = await Developer.create({
-      name: name.trim(),
-       role: role.trim(),
-       techStack: techStack
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean),
-       experience: Number(experience) || 0
-    });
-
-      res.status(201).json(newDev);
-  } catch (err) {
-     res.status(500).json({ error: "Server error" });
-  }
-});
-
-
- const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
+app.listen(process.env.PORT || 4000, () =>
+  console.log("Server Running...")
+);

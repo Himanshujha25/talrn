@@ -3,9 +3,11 @@ const mongoose = require("mongoose");
 const developerSchema = new mongoose.Schema({
   name: { type: String, required: true },
   role: { type: String, required: true },
-  techStack: { type: [String], required: true },
+  techStack: [String],
   experience: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now }
+  description: { type: String },
+  joiningDate: { type: Date, default: Date.now },
+  photo: { type: String }
 });
 
 module.exports = mongoose.model("Developer", developerSchema);
