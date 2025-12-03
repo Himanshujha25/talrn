@@ -1,84 +1,243 @@
-Developer Directory App
+📘 Developer Directory – Full Stack App (Round-2 Submission)
 
-This project is created as part of the Full Stack Internship Task for Talrn.com.
+A fully functional Full-Stack Developer Directory Application built as part of Talrn Round-2 Full-Stack Internship Selection Task.
+This system includes secure authentication, CRUD operations, developer profiles, search, filters, sorting, pagination, and production-ready deployment.
 
-The application allows users to add developers, store data in MongoDB, and display the list of developers with search and filtering options.
+🚀 Features Implemented (as per Round-2 Requirements)
+✅ 1. Authentication (JWT + Protected Routes)
 
-Features
-Frontend (React)
+Signup with: Name, Email, Password
 
-Add developer details:
+Secure login with JWT token
+
+Password hashing using bcrypt
+
+All developer-related routes protected using Auth Middleware
+
+Only logged-in users can:
+
+View developer list
+
+Create developer
+
+Edit developer
+
+Delete developer
+
+View developer profile page
+
+✅ 2. Developer Profile Page
+
+Each developer has a dedicated page showing:
 
 Name
 
 Role (Frontend / Backend / Full-Stack)
 
-Tech Stack (comma separated)
+Tech stack (displayed as tags)
 
-Experience (in years)
+Experience
 
-Display all developers in a clean and responsive UI
+Description / About section
 
-Search / filter by:
+Joining date
 
-Role
+Optional: Image upload support (extendable)
 
-Tech stack
+✅ 3. Enhanced Developer Directory
 
-Toast messages for success and error
+Search by name or tech stack
 
-Functional components + Hooks
+Filter by role (Frontend / Backend / Full-Stack)
 
-Styled using Tailwind CSS
+Sort developers by experience (Low → High, High → Low)
 
-Backend (Node.js + Express)
+Pagination with Next / Previous buttons
 
-API Endpoints:
+Fully responsive and optimized UI
 
-POST /developers → Save developer details
+✅ 4. CRUD Improvements
 
-GET /developers → Return list of developers
+Backend:
 
-MongoDB database using Mongoose
+POST /developers → Create developer
 
-Clean and readable code
+GET /developers → List developers (with search, filter, sort, pagination)
 
-Setup Instructions
-Backend Setup
-cd backend
-npm install
+GET /developers/:id → Get single developer
 
+PUT /developers/:id → Update developer
 
-Create a .env file:
+DELETE /developers/:id → Delete developer
 
-MONGO_URI=your_mongodb_atlas_url
-PORT=4000
+Input validation with custom validation + Mongoose validations
 
+Authentication middleware protects all dev routes
 
-Start the backend:
+Frontend:
 
-npm run dev
+Create Developer page
 
-Frontend Setup
-cd frontend
-npm install
-npm run dev
+Edit Developer page
 
+Delete with confirmation prompt
 
-Update backend API URL in frontend if deployed:
+Developer profile page
 
-http://your-backend-url/developers
+✅ 5. UI/UX Enhancements
 
-Technologies Used
+Toast notifications (success / error) using React Toastify
 
-React
+Global loading indicators
 
-Tailwind CSS
+Fully responsive UI
+
+Clean modern design using Tailwind CSS v4
+
+Light / Dark mode toggle
+
+Clean filters section with debounce search
+
+Error fallback messages
+
+✅ 6. Deployment
+
+Frontend Hosted on: Vercel
+
+Backend Hosted on: Render (or Railway/Cyclic)
+
+CORS configured properly
+
+Environment variables secured
+
+API fully connected and working from deployed frontend
+
+🛠 Tech Stack
+Frontend
+
+React (Functional Components + Hooks)
+
+React Router DOM
+
+Axios
+
+Tailwind CSS v4
 
 React Toastify
+
+Heroicons
+
+Vite
+
+Backend
 
 Node.js
 
 Express.js
 
-MongoDB (Mongoose)
+MongoDB + Mongoose
+
+JWT Authentication
+
+bcrypt password hashing
+
+CORS enabled
+
+Tools
+
+Postman for API testing
+
+GitHub for version control
+
+Vercel (Frontend Deployment)
+
+Render (Backend Deployment)
+
+📂 Folder Structure
+Frontend
+/src
+  /components
+  /pages
+  /context
+  App.jsx
+  main.jsx
+  index.css
+
+Backend
+/controllers
+/middleware
+/models
+/routes
+server.js
+.env
+
+⚙️ Setup Instructions
+1. Clone the Repo
+git clone <your-frontend-repo>
+git clone <your-backend-repo>
+
+🔧 Backend Setup
+cd backend
+npm install
+
+
+Create .env:
+
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+PORT=4000
+
+
+Run backend:
+
+npm start
+
+🎨 Frontend Setup
+cd frontend
+npm install
+npm run dev
+
+🌐 Environment Variables (Frontend)
+
+Create .env:
+
+VITE_API_URL=https://your-backend.onrender.com
+
+🏗 Architecture Overview
+Frontend Architecture
+
+Centralized auth state using Context API
+
+Token stored in localStorage
+
+ProtectedRoute + PublicRoute for route guarding
+
+Modular pages:
+
+Login
+
+Signup
+
+Dashboard
+
+AddDeveloper
+
+EditDeveloper
+
+DeveloperProfile
+
+Backend Architecture
+
+MVC Structure:
+
+Models → DB schema
+
+Controllers → Logic
+
+Routes → API endpoints
+
+Middleware-based authentication
+
+Clean reusable code
+
+Pagination + search + filtering logic inside controllers
