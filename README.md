@@ -201,8 +201,6 @@ npm run dev
 
 Create .env:
 
-VITE_API_URL=https://your-backend.onrender.com
-
 🏗 Architecture Overview
 Frontend Architecture
 
